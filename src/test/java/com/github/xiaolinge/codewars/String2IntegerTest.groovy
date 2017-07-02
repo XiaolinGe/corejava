@@ -23,7 +23,5 @@ class String2IntegerTest extends Specification {
         Long.MAX_VALUE + "" || Option.none()
         Long.MIN_VALUE + "" || Option.none()
 
-
-
     }
 }

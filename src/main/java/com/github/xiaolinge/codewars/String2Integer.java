@@ -21,7 +21,7 @@ public class String2Integer {
      */
     public Option<Integer> parseInt(String str) {
 
-       return Option.of(str)
+     /*  return Option.of(str)
                 .map(e -> {
                     Option<Integer> intValue;
                     try {
@@ -30,7 +30,22 @@ public class String2Integer {
                         return Option.<Integer>none();
                     }
                     return intValue;
-                }).getOrElse(Option.none());
+                }).getOrElse(Option.none());*/
+
+
+     return Option.of(str)
+             .map(e -> {
+                 Option<Integer> intValue;
+                 try {
+                     intValue = Option.of(Integer.parseInt(e));
+                 } catch (NumberFormatException e1) {
+                     return Option.<Integer>none();
+                 }
+                 return intValue;
+             })
+             .getOrElse(Option.none());
+
 
     }
+
 }
