@@ -25,6 +25,7 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
 	compile('io.javaslang:javaslang:2.1.0-alpha')
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
 	compileOnly('org.projectlombok:lombok')
 	testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
 	testCompile 'cglib:cglib-nodep:3.1'

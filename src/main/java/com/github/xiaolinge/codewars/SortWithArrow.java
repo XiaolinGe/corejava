@@ -11,10 +11,10 @@ import javaslang.control.Option;
 public class SortWithArrow {
 
     public static void main(String[] args) {
-        Map<String,String> map = API.Map();
+       List<String> list = API.List("A","B","C","C");
 
-        System.out.println(map.get("age"));
-
+       List res = Option.of(list.map(e->e+"1")).getOrElse(List.empty());
+        System.out.println(res);
     }
 
 
