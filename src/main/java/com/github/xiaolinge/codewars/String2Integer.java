@@ -59,20 +59,20 @@ public class String2Integer {
     }
 
 
-    public Either<String, Integer> parseIntEither(String str) {
+
+   public Either<String, Integer> parseIntEither(String str) {
 
         return Option.of(str)
                 .map(e -> Try.of(() -> Integer.parseInt(e)).toEither())
                 .map(e -> e.mapLeft(ex -> {
                     ex.printStackTrace();
                     String message = ex.getMessage();
-                    if (Pattern.matches("[-]?\\d+",StringUtils.substringBetween(message,"For input string: \"","\""))){
+                   if (Pattern.matches("[-]?\\d+",StringUtils.substringBetween(message,"For input string: \"","\""))){
                         return "Out of Integer's range";
                     }
                     return message;
                 }))
                 .getOrElse(Either.left("input str is null"));
     }
-
 
 }

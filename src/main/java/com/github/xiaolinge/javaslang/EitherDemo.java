@@ -2,25 +2,37 @@ package com.github.xiaolinge.javaslang;
 
 import javaslang.collection.List;
 import javaslang.control.Either;
+import javaslang.control.Option;
+import javaslang.control.Try;
+
+import java.text.MessageFormat;
 
 public class EitherDemo {
-    public static void main(String[] args) {
 
-        Either<String, Integer> either = Either.left("xx");
-        either = either.map(integer -> integer++);
-        System.out.println(either);
-
-
-        // List<Either<String, Integer>> list = List.of(Either.left("err"), Either.right(1));
-      /*  list.map(e -> {
-            if (e.isLeft()) {
-                return e;
-            } else {
-                return Either.right(e.get() + 1);
-            }
-        }).stdout();*/
-        //  list.map(e -> e.map(integer -> integer++)).stdout();
+    public List<Either<String, Integer>> map(List<Either<String, Integer>> intsEither) {
+        return intsEither
+                .map(intEither -> intEither.map(e -> e + 1));
     }
 
+    public List<Either<String, Integer>> mapLeft(List<Either<String, Integer>> intsEither) {
+        return intsEither
+                .map(intEither -> intEither.mapLeft(e -> MessageFormat.format("error msg: {0}", e)));
 
+    }
+
+    public List<Either<String, Integer>> biMap(List<Either<String, Integer>> intsEither) {
+        return intsEither
+                .map(intEither -> intEither.bimap(err -> MessageFormat.format("error msg: {0}", err), intVal -> intVal+1));
+    }
+
+    public Either<String, String> left(String str) {
+        return Try.of(() -> str.substring(0,3))
+                .toEither()
+                .mapLeft(ex -> "err");
+
+    }
+
+    public Either<String, String> right(String str) {
+        return Either.right(str.substring(0,3));
+    }
 }
