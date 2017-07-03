@@ -36,7 +36,6 @@ class SortWithArrowTest extends Specification {
         SortWithArrow sortWithArrow = new SortWithArrow()
 
 
-
         expect:
         sortWithArrow.orderPeopleMap(list) == res
 
