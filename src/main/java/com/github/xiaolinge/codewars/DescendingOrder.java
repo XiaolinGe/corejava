@@ -22,15 +22,14 @@ public class DescendingOrder {
                 .bimap(err -> MessageFormat.format("error msg: {0}", err),
                         val -> Option.of(val)
                                 .map(Object::toString)
-                                .map(e1 -> e1.split(""))
+                                .map(e -> e.split(""))
                                 .map(List::of)
                                 .map(List::sorted)
                                 .map(List::reverse)
-                                .map(e5 -> e5.reduce((l, r) -> l + r))
+                                .map(e -> e.reduce((l, r) -> l + r))
                                 .map(String::toString)
                                 .map(Integer::parseInt)
                                 .getOrElse(0)
-
                 );
     }
 
