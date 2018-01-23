@@ -7,12 +7,13 @@ import javaslang.collection.Stream;
 import javaslang.collection.Traversable;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.function.Function;
 
 import static javaslang.API.List;
 import static javaslang.API.Tuple;
 
-public class JavaslangTest {
+public class JavaslangApiTest {
 
     @Test
     public void createObject() {
@@ -44,7 +45,7 @@ public class JavaslangTest {
         Person person2 = Person.of().age(12).name("world");
         List<Person> persons = List(person1, person2);
         System.out.println(persons);
-        persons.forEach(e-> System.out.println(e));
+        persons.forEach(e -> System.out.println(e));
     }
 
     @Test
@@ -62,7 +63,7 @@ public class JavaslangTest {
         Person person1 = Person.of().age(10).name("aa");
         Person person2 = Person.of().age(11).name("bb");
         List<Person> persons = List(person1, person2);
-        List<String> names = persons.filter(p->p.age() > 10)
+        List<String> names = persons.filter(p -> p.age() > 10)
                 .map(e -> e.name());
         names.forEach(e -> System.out.println(e)); // why do not use map but forEach, what is the different?
     }
@@ -121,7 +122,6 @@ public class JavaslangTest {
     }
 
 
-
     @Test
     public void groupBy() {
         Person person1 = Person.of().age(10).name("xx");
@@ -144,18 +144,36 @@ public class JavaslangTest {
     }
 
     @Test
+    public void groupByToList() {
+        Person person0 = Person.of().age(10).name("aa");
+        Person person1 = Person.of().age(10).name("aaa");
+        Person person2 = Person.of().age(11).name("bb");
+        Person person3 = Person.of().age(11).name("ccc");
+        List<Person> persons = List(person0, person1, person2, person3);
+        System.out.println(persons);
+        System.out.println(persons.groupBy(e-> e.age()));
+        java.util.List<List<String>> result = persons.groupBy(e-> e.age())
+                .map(personTuple2 -> personTuple2._2
+                        .map(person -> person.name())
+                        .prepend(personTuple2._1.toString()))
+                .toJavaList();
+
+        System.out.println(result);
+
+    }
+
+    @Test
     public void groupAndMap() {
 
         List<String> list = List("apple", "orange", "banana", "papaya", "banana");
         list.groupBy(Function.identity())
                 .map(e -> Tuple(e._1, e._2.size()))
                 .stdout();
-
     }
 
     @Test
     public void groupAndMap2() {
-        List<String> list = List("apple",  "orange", "banana", "papaya", "banana");
+        List<String> list = List("apple", "orange", "banana", "papaya", "banana");
         list.groupBy(Function.identity())
                 .map(e -> Tuple(e._1, e._2))
                 .stdout();
@@ -168,7 +186,7 @@ public class JavaslangTest {
 
     @Test
     public void combination2() {
-        System.out.println(List(1,2).combinations());
+        System.out.println(List(1, 2).combinations());
     }
 
 
@@ -186,7 +204,8 @@ public class JavaslangTest {
         List<String> list1 = List("apple", "orange", "banana", "papaya", "cherry");
         List<String> list2 = List("apple", "orange", "banana", "papaya", "cherry");
         List<List<String>> lists = List(list1, list2);
-        List<String > flatedList = lists.flatMap(e -> e.iterator());
+        System.out.println(lists);
+        List<String> flatedList = lists.flatMap(e -> e.iterator());
         System.out.println(flatedList);
         flatedList.stdout();
     }
@@ -199,7 +218,6 @@ public class JavaslangTest {
         List<Person> persons = List(person1, person2, person3);
         Tuple2<List<Person>, List<Person>> result = persons.partition(e -> e.age() > 12);
         System.out.println(result);
-
     }
 
     @Test
@@ -208,7 +226,7 @@ public class JavaslangTest {
         Person person2 = Person.of().age(14).name("yy");
         Person person3 = Person.of().age(16).name("zzz");
         List<Person> persons = List(person1, person2, person3);
-        Tuple2<List<Person>, List<Person>> res = persons.partition(e -> e.age()>13);
+        Tuple2<List<Person>, List<Person>> res = persons.partition(e -> e.age() > 13);
         System.out.println(res);
 
     }
@@ -280,7 +298,6 @@ public class JavaslangTest {
     }
 
 
-
     @Test
     public void contains() {
         Person person1 = Person.of().age(10).name("xx");
@@ -288,13 +305,10 @@ public class JavaslangTest {
         Person person3 = Person.of().age(16).name("zzz");
 
         Person person4 = Person.of().age(16).name("zzz");
-
         List<Person> persons = List(person1, person2, person3);
-
 
         boolean result = persons.contains(person3);
         System.out.println(result);
-
 
         boolean result2 = persons.contains(person4);
         System.out.println(result2);
@@ -457,7 +471,7 @@ public class JavaslangTest {
         Person person2 = Person.of().age(11).name("bb");
         Person person3 = Person.of().age(12).name("ccc");
         List<Person> persons = List(person1, person2, person3);
-        List<Tuple2<Person,Integer>> res = persons.zipWithIndex();
+        List<Tuple2<Person, Integer>> res = persons.zipWithIndex();
         System.out.println(res);
 
     }
@@ -471,8 +485,8 @@ public class JavaslangTest {
 
     @Test
     public void zip2() {
-        List<Integer> list1 = List(1,2,3,4,5);
-        List<String> list2  = List("a", "b", "c", "d");
+        List<Integer> list1 = List(1, 2, 3, 4, 5);
+        List<String> list2 = List("a", "b", "c", "d");
         List<Tuple2<Integer, String>> res = list1.zip(list2);
         System.out.println(res);
     }
@@ -508,7 +522,6 @@ public class JavaslangTest {
         Number res = persons.map(e -> e.age()).product();
         System.out.println(res);
     }
-
 
 
     @Test
@@ -584,7 +597,7 @@ public class JavaslangTest {
 
     @Test
     public void splitAt2() {
-        List<Integer> list = List(1,2,3,4,5);
+        List<Integer> list = List(1, 2, 3, 4, 5);
         Tuple2<List<Integer>, List<Integer>> res1 = list.splitAt(e -> e > 2);
         Tuple2<List<Integer>, List<Integer>> res2 = list.partition(e -> e > 2);
         System.out.println(res1);
