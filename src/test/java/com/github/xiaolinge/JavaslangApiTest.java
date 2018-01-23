@@ -65,7 +65,7 @@ public class JavaslangApiTest {
         List<Person> persons = List(person1, person2);
         List<String> names = persons.filter(p -> p.age() > 10)
                 .map(e -> e.name());
-        names.forEach(e -> System.out.println(e)); // why do not use map but forEach, what is the different?
+        names.forEach(e -> System.out.println(e));
     }
 
 
