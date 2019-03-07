@@ -1,6 +1,6 @@
 package com.github.xiaolinge.javaslang;
 
-import javaslang.API;
+
 import javaslang.collection.List;
 import javaslang.control.Option;
 
